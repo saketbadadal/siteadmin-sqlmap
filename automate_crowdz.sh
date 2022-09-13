@@ -89,10 +89,10 @@ fi
 
 #Login with API to authenticate
 echo -ne "[+] Authenticating..."
-session="_session=$(cat $HEADER_DUMP_DEST | grep "_session" | awk '{printf $8}' | sed 's/^.*value=\s*//' | tr -d '"')"
+session="sessionid=$(cat $HEADER_DUMP_DEST | grep "sessionid" | awk '{printf $8}' | sed 's/^.*value=\s*//' | tr -d '"')"
 echo "session is: $session"
 curl --silent -k --data "$session&Email=$ENCODED_USERNAME&password=$ENCODED_PASSWORD" -i -b $COOKIE_JAR -c $COOKIE_JAR $AUTH_URL > $HEADER_DUMP_DEST
-SESSION_ID=`cat $HEADER_DUMP_DEST | grep _session | awk {'print $2'}`
+SESSION_ID=`cat $HEADER_DUMP_DEST | grep sessionid | awk {'print $2'}`
 if [[ "$SESSION_ID" == "" ]]; then
 	echo -e "\t\t\t\tFailed!"
 	echo "Cant authenticate with $URL, Kindly check Username/Password and retry"
